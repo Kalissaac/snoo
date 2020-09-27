@@ -3,8 +3,8 @@ import moment from 'moment'
 
 export default function Post(props) {
   return (
-    <a href={props.postData.permalink}> {/* TODO: replace with link tag for better performance */}
-      <div className="bg-white rounded-lg mx-32 my-6 p-6 shadow-xl md:flex overflow-hidden" id={props.postData.id}>
+    // <a href={props.postData.permalink}> {/* TODO: replace with link tag for better performance */}
+      <div className="bg-white rounded-lg mx-56 my-6 p-6 shadow-xl flex flex-col overflow-hidden" id={props.postData.id}>
         <div className="flex container max-w-full"> {/* info container */}
           <div className="voting min-w-12 h-full flex justify-center items-center">
             <div className="text-gray-700">{props.postData.score}</div>
@@ -34,18 +34,21 @@ export default function Post(props) {
             }
           </div>
         </div>
-        <div className="float-right"> {/* preview container */}
+        <div className="ml-16"> {/* preview container */}
           { isImage(props.postData.url) &&
-            <img className="h-64 w-64 object-contain" src={props.postData.url} alt={props.postData.title}/>
+            <img className="max-w-full object-contain" style={{ maxHeight: '36rem' }} src={props.postData.url} alt={props.postData.title}/>
           }
           { isVideo(props.postData.url) &&
             <video controls autoPlay className="h-64 w-64">
               <source src={getProperVideoUrl(props.postData.url)} type={getVideoMimeType(props.postData.url)} />
             </video>
           }
+          { isYouTube(props.postData.url) !== null &&
+            <iframe width="100%" height="762" src={'https://www.youtube-nocookie.com/embed/' + isYouTube(props.postData.url)[1]} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+          }
         </div>
       </div>
-    </a>
+    // </a>
   )
 }
 
@@ -77,4 +80,8 @@ function getProperVideoUrl (url: String) {
   if (type === 'gifv') type = 'mp4'
   newUrl.push(type)
   return newUrl.join('.')
+}
+
+function isYouTube (url: String) {
+  return url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
 }
