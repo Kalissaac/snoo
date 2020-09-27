@@ -1,5 +1,5 @@
 {
-  "name": "with-tailwindcss",
+  "name": "snoo",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
@@ -7,14 +7,19 @@
     "start": "next start"
   },
   "dependencies": {
+    "moment": "^2.29.0",
     "next": "latest",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "@types/node": "^14.11.2",
+    "@types/react": "^16.9.49",
+    "autoprefixer": "^10.0.1",
     "postcss-flexbugs-fixes": "4.2.1",
     "postcss-preset-env": "^6.7.0",
-    "tailwindcss": "^1.7.4"
+    "tailwindcss": "^1.7.4",
+    "typescript": "^4.0.3"
   },
   "license": "MIT"
 }
