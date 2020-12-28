@@ -12,8 +12,8 @@ export default function Post(props) {
           <div className="ml-4">
             <div className="mb-2 flex justify-between w-full">
               <div>
-                <span className="mr-2"><Link href={props.postData.subreddit_name_prefixed}>{props.postData.subreddit_name_prefixed}</Link></span>
-                <span className={props.postData.distinguished ? props.postData.distinguished === 'admin' ? 'text-red-600' : 'text-green-600' : 'text-gray-600' + ' mx-2'}><Link href={'u/' + props.postData.author}>{props.postData.author}</Link></span>
+                <span className="mr-2"><Link href={'/' + props.postData.subreddit_name_prefixed}>{props.postData.subreddit_name_prefixed}</Link></span>
+                <span className={props.postData.distinguished ? props.postData.distinguished === 'admin' ? 'text-red-600' : 'text-green-600' : 'text-gray-600' + ' mx-2'}><Link href={'/u/' + props.postData.author}>{'u/' + props.postData.author}</Link></span>
                 <span className="text-gray-600 mx-2">{moment.unix(props.postData.created_utc).fromNow()}</span>
               </div>
               <div className="self-center">
