@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { Transition } from '@tailwindui/react'
 
 export default function IndexPage({ redditPosts }) {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <div className="bg-gray-100">
       <Head>
