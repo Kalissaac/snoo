@@ -22,8 +22,8 @@ export default function SubredditPage({ redditPosts, subredditInfo }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { subreddit } = context.params
   if (!subreddit || subreddit === '') return //context.res.redirect('/')
-  const redditPosts = await getRedditPosts(subreddit)
-  const subredditInfo = await getSubredditInfo(subreddit)
+  const redditPosts = await getRedditPosts(subreddit as string)
+  const subredditInfo = await getSubredditInfo(subreddit as string)
   return {
     props: {
       redditPosts,
