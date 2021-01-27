@@ -12,9 +12,11 @@ export default function SubredditPage({ redditPosts, subredditInfo }) {
         <p className="text-xl text-center text-gray-700">{subredditInfo.data.title}</p>
       </div>
 
-      {redditPosts.data.children.map(({ data }) => (
-        <Post postData={data} key={data.id}/>
-      ))}
+      <div className="md:mx-24 lg:mx-32 xl:mx-56">
+        {redditPosts.data.children.map(({ data }) => (
+          <Post postData={data} key={data.id}/>
+        ))}
+      </div>
     </div>
   )
 }

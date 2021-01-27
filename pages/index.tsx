@@ -17,9 +17,11 @@ export default function IndexPage({ redditPosts }) {
         </h1>
       </div>
 
-      {redditPosts.data.children.map(({ data }) => (
-        <Post postData={data} key={data.id}/>
-      ))}
+      <div className="md:mx-24 lg:mx-32 xl:mx-56">
+        {redditPosts.data.children.map(({ data }) => (
+          <Post postData={data} key={data.id}/>
+        ))}
+      </div>
     </>
   )
 }

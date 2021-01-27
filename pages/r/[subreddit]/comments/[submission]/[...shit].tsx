@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next'
 import Nav from '@components/nav'
 import { getPostComments } from '@lib/reddit'
 import Head from 'next/head'
+import Comment from '@components/comment'
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
 import Link from 'next/link'
@@ -22,10 +23,28 @@ export default function Comments({ postData }) {
         <title>{postInfo.title}</title>
       </Head>
       <Nav />
-      <div className="py-5 mx-56 flex flex-col">
-        <p className="text-3xl text-center">{postInfo.title}</p>
+      <div className="py-5 md:mx-24 lg:mx-32 xl:mx-56 flex flex-col">
+        <h1 className="text-3xl text-center">{postInfo.title}</h1>
+        <div className="my-1 flex self-center text-gray-300">
+          <div>
+            <span className="mr-2"><Link href={'/' + postInfo.subreddit_name_prefixed}>{postInfo.subreddit_name_prefixed}</Link></span>
+            <span className={postInfo.distinguished ? postInfo.distinguished === 'admin' ? 'text-red-300' : 'text-green-300' : '' + ' mx-2'}><Link href={'/u/' + postInfo.author}>{'u/' + postInfo.author}</Link></span>
+            <span className="mx-2">{dayjs.unix(postInfo.created_utc).fromNow()}</span>
+          </div>
+          <div className="self-center">
+            { postInfo.stickied === true &&
+              <div className="rounded-full h-3 w-3 bg-green-300 inline-block ml-1" title="Post stickied"></div>
+            }
+            { postInfo.locked === true &&
+              <div className="rounded-full h-3 w-3 bg-yellow-300 inline-block ml-1" title="Post locked"></div>
+            }
+            { postInfo.archived === true &&
+              <div className="rounded-full h-3 w-3 bg-orange-300 inline-block ml-1" title="Post archived"></div>
+            }
+          </div>
+        </div>
 
-        <div className="m-12 self-center"> {/* preview container */}
+        <div className="m-10 self-center"> {/* preview container */}
         { isImage(postInfo.url) &&
           <img className="max-w-full object-contain" style={{ maxHeight: '36rem' }} src={postInfo.url} alt={postInfo.title}/>
         }
@@ -39,38 +58,9 @@ export default function Comments({ postData }) {
         }
       </div>
 
-        {postComments.map(commentRaw => {
-          const comment = commentRaw.data
-          return (
-            <div className="bg-darker-gray rounded-lg my-2 p-4 shadow-xl flex flex-col overflow-hidden">
-              <div className="flex container max-w-full"> {/* info container */}
-                <div className="voting min-w-12 h-full flex justify-center items-center">
-                  <div className="text-gray-300">{comment.score}</div>
-                </div>
-                <div className="ml-4">
-                  <div className="mb-2 flex justify-between w-full">
-                    <div>
-                      <span className={comment.distinguished ? comment.distinguished === 'admin' ? 'text-red-300' : 'text-green-300' : 'text-gray-300'}><Link href={'/u/' + comment.author}>{'u/' + comment.author}</Link></span>
-                      <span className="text-gray-300 mx-2">{dayjs.unix(comment.created_utc).fromNow()}</span>
-                    </div>
-                    <div className="self-center">
-                      { comment.stickied === true &&
-                        <div className="rounded-full h-3 w-3 bg-green-300 inline-block ml-1" title="Comment stickied"></div>
-                      }
-                      { comment.edited === true &&
-                        <div className="rounded-full h-3 w-3 bg-yellow-300 inline-block ml-1" title="Comment edited"></div>
-                      }
-                      { comment.gilded === true &&
-                        <div className="rounded-full h-3 w-3 bg-orange-300 inline-block ml-1" title="Comment gilded"></div>
-                      }
-                    </div>
-                  </div>
-                  <p className="">{comment.body}</p>
-                </div>
-              </div>
-            </div>
-          )
-        })}
+        {postComments.map(({ data }) => (
+          <Comment comment={data} />
+        ))}
       </div>
     </>
   )

@@ -6,52 +6,52 @@ import html from 'remark-html'
 
 dayjs.extend(relativeTime)
 
-export default function Post(props) {
+export default function Post({ postData }) {
 
   return (
-    <Link href={props.postData.permalink}>
+    <Link href={postData.permalink}>
       <a className="w-full h-full block">
-        <div className="bg-darker-gray rounded-lg mx-56 my-6 p-6 shadow-xl flex flex-col overflow-hidden" id={props.postData.id}>
+        <div className="bg-darker-gray rounded-lg my-6 p-6 shadow-xl flex flex-col overflow-hidden" id={postData.id}>
           <div className="flex container max-w-full"> {/* info container */}
             <div className="voting min-w-12 h-full flex justify-center items-center">
-              <div className="text-gray-300">{props.postData.score}</div>
+              <div className="text-gray-300">{postData.score}</div>
             </div>
             <div className="ml-4">
               <div className="mb-2 flex justify-between w-full">
                 <div>
-                  <span className="mr-2"><Link href={'/' + props.postData.subreddit_name_prefixed}>{props.postData.subreddit_name_prefixed}</Link></span>
-                  <span className={props.postData.distinguished ? props.postData.distinguished === 'admin' ? 'text-red-300' : 'text-green-300' : 'text-gray-300' + ' mx-2'}><Link href={'/u/' + props.postData.author}>{'u/' + props.postData.author}</Link></span>
-                  <span className="text-gray-300 mx-2">{dayjs.unix(props.postData.created_utc).fromNow()}</span>
+                  <span className="mr-2"><Link href={'/' + postData.subreddit_name_prefixed}>{postData.subreddit_name_prefixed}</Link></span>
+                  <span className={postData.distinguished ? postData.distinguished === 'admin' ? 'text-red-300' : 'text-green-300' : 'text-gray-300' + ' mx-2'}><Link href={'/u/' + postData.author}>{'u/' + postData.author}</Link></span>
+                  <span className="text-gray-300 mx-2">{dayjs.unix(postData.created_utc).fromNow()}</span>
                 </div>
                 <div className="self-center">
-                  { props.postData.stickied === true &&
+                  { postData.stickied === true &&
                     <div className="rounded-full h-3 w-3 bg-green-300 inline-block ml-1" title="Post stickied"></div>
                   }
-                  { props.postData.locked === true &&
+                  { postData.locked === true &&
                     <div className="rounded-full h-3 w-3 bg-yellow-300 inline-block ml-1" title="Post locked"></div>
                   }
-                  { props.postData.archived === true &&
+                  { postData.archived === true &&
                     <div className="rounded-full h-3 w-3 bg-orange-300 inline-block ml-1" title="Post archived"></div>
                   }
                 </div>
               </div>
-              <h1 className="text-blue-500 text-xl"><Link href={'' + props.postData.permalink}><a>{props.postData.title}</a></Link></h1>  {/* TODO: remove reddit.com */}
-              { props.postData.selftext !== '' &&
-                <p className="text-gray-400 text-sm" dangerouslySetInnerHTML={{ __html: truncate(props.postData.selftext, 1000)}} ></p>
+              <h1 className="text-blue-500 text-xl"><Link href={'' + postData.permalink}><a>{postData.title}</a></Link></h1>  {/* TODO: remove reddit.com */}
+              { postData.selftext !== '' &&
+                <p className="text-gray-400 text-sm" dangerouslySetInnerHTML={{ __html: truncate(postData.selftext, 1000)}} ></p>
               }
             </div>
           </div>
           <div className="ml-16 mt-2"> {/* preview container */}
-            { isImage(props.postData.url) &&
-              <img className="max-w-full object-contain" style={{ maxHeight: '36rem' }} src={props.postData.url} alt={props.postData.title}/>
+            { isImage(postData.url) &&
+              <img className="max-w-full object-contain" style={{ maxHeight: '36rem' }} src={postData.url} alt={postData.title}/>
             }
-            { isVideo(props.postData.url) &&
+            { isVideo(postData.url) &&
               <video controls autoPlay className="h-64 w-64">
-                <source src={getProperVideoUrl(props.postData.url)} type={getVideoMimeType(props.postData.url)} />
+                <source src={getProperVideoUrl(postData.url)} type={getVideoMimeType(postData.url)} />
               </video>
             }
-            { isYouTube(props.postData.url) !== null &&
-              <iframe width="100%" height="762" src={'https://www.youtube-nocookie.com/embed/' + isYouTube(props.postData.url)[1]} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+            { isYouTube(postData.url) !== null &&
+              <iframe width="100%" height="762" src={'https://www.youtube-nocookie.com/embed/' + isYouTube(postData.url)[1]} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
             }
           </div>
         </div>
