@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'accent-1': '#333',
+        'darker-gray': '#111111',
       },
     },
     minWidth: {

@@ -1,6 +1,6 @@
-import Nav from '../../components/nav'
-import Post from '../../components/post'
-import { getRedditPosts, getSubredditInfo } from '../../lib/reddit'
+import Nav from '@components/nav'
+import Post from '@components/post'
+import { getRedditPosts, getSubredditInfo } from '@lib/reddit'
 import { GetServerSideProps } from 'next'
 
 export default function SubredditPage({ redditPosts, subredditInfo }) {
