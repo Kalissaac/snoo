@@ -1,13 +1,12 @@
 import Link from 'next/link'
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
-import remark from 'remark'
-import html from 'remark-html'
+import showdown from 'showdown'
 
 dayjs.extend(relativeTime)
+const converter = new showdown.Converter()
 
 export default function Post({ postData }) {
-
   return (
     <Link href={postData.permalink}>
       <a className="w-full h-full block">
@@ -16,7 +15,7 @@ export default function Post({ postData }) {
             <div className="voting min-w-12 h-full flex justify-center items-center">
               <div className="text-gray-300">{postData.score}</div>
             </div>
-            <div className="ml-4">
+            <div className="ml-4 flex-grow">
               <div className="mb-2 flex justify-between w-full">
                 <div>
                   <span className="mr-2"><Link href={'/' + postData.subreddit_name_prefixed}>{postData.subreddit_name_prefixed}</Link></span>
@@ -37,7 +36,7 @@ export default function Post({ postData }) {
               </div>
               <h1 className="text-blue-500 text-xl"><Link href={'' + postData.permalink}><a>{postData.title}</a></Link></h1>  {/* TODO: remove reddit.com */}
               { postData.selftext !== '' &&
-                <p className="text-gray-400 text-sm" dangerouslySetInnerHTML={{ __html: truncate(postData.selftext, 1000)}} ></p>
+                <p className="text-gray-400 text-sm" dangerouslySetInnerHTML={{ __html: converter.makeHtml(truncate(postData.selftext, 1000))}} ></p>
               }
             </div>
           </div>
@@ -66,13 +65,6 @@ function truncate(str: string, n: number, useWordBoundary: boolean = true){
   return (useWordBoundary
     ? subString.substr(0, subString.lastIndexOf(" "))
     : subString) + "&hellip;";
-}
-
-async function renderMarkdown(str:string) {
-  const processedContent = await remark()
-    .use(html)
-    .process(str)
-  return processedContent.toString()
 }
 
 function isImage (url: String) {

@@ -1,11 +1,10 @@
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import remark from 'remark'
-import html from 'remark-html'
+import showdown from 'showdown'
 
 dayjs.extend(relativeTime)
+const converter = new showdown.Converter()
 
 export default function ParentComment ({ comment }) {
   return (
@@ -40,7 +39,7 @@ function Comment ({ comment }) {
               }
             </div>
           </div>
-          <p>{comment.body}</p>
+          <p dangerouslySetInnerHTML={{ __html: converter.makeHtml(comment.body)}} />
           {comment.replies && comment.replies.data.children.map(childComment => {
             if (childComment.kind !== 'more') {
               return <Comment comment={childComment.data} key={childComment.data.id} />
@@ -50,27 +49,4 @@ function Comment ({ comment }) {
       </div>
     </div>
   )
-}
-
-function CommentBody ({ text }) {
-  const [renderedText, setRenderedText] = useState(text)
-
-  useEffect(() => {
-    renderMarkdown(text).then((str) => {
-      setRenderedText(str)
-    })
-  }, [])
-
-  return (
-    <p dangerouslySetInnerHTML={{
-      __html: renderedText
-    }} />
-  )
-}
-
-async function renderMarkdown(str:string) {
-  const processedContent = await remark()
-    .use(html)
-    .process(str)
-  return processedContent.toString()
 }

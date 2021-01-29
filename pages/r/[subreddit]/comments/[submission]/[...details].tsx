@@ -6,8 +6,10 @@ import Comment from '@components/comment'
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
 import Link from 'next/link'
+import showdown from 'showdown'
 
 dayjs.extend(relativeTime)
+const converter = new showdown.Converter()
 
 export default function Comments({ postData }) {
   const postInfo = postData[0].data.children[0].data
@@ -40,6 +42,9 @@ export default function Comments({ postData }) {
         </div>
 
         <div className="m-10 self-center"> {/* preview container */}
+        { postInfo.selftext !== '' &&
+          <p className="text-gray-200" dangerouslySetInnerHTML={{ __html: converter.makeHtml(postInfo.selftext) }}></p>
+        }
         { isImage(postInfo.url) &&
           <img className="max-w-full object-contain" style={{ maxHeight: '36rem' }} src={postInfo.url} alt={postInfo.title}/>
         }
