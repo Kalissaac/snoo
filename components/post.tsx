@@ -2,6 +2,7 @@ import Link from 'next/link'
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
 import showdown from 'showdown'
+import kFormatter from '@lib/numFormat'
 
 dayjs.extend(relativeTime)
 const converter = new showdown.Converter()
@@ -13,7 +14,7 @@ export default function Post({ postData }) {
         <div className="bg-darker-gray rounded-lg my-6 p-6 shadow-xl flex flex-col overflow-hidden" id={postData.id}>
           <div className="flex container max-w-full"> {/* info container */}
             <div className="voting min-w-12 h-full flex justify-center items-center">
-              <div className="text-gray-300">{postData.score}</div>
+              <div className="text-gray-300">{kFormatter(postData.score)}</div>
             </div>
             <div className="ml-4 flex-grow">
               <div className="mb-2 flex justify-between w-full">

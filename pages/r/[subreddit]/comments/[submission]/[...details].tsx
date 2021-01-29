@@ -7,6 +7,8 @@ import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
 import Link from 'next/link'
 import showdown from 'showdown'
+import kFormatter from '@lib/numFormat'
+import { getProperVideoUrl, getVideoMimeType, isImage, isVideo, isYouTube } from '@lib/media'
 
 dayjs.extend(relativeTime)
 const converter = new showdown.Converter()
@@ -26,6 +28,7 @@ export default function Comments({ postData }) {
           <div>
             <span className="mr-2"><Link href={'/' + postInfo.subreddit_name_prefixed}>{postInfo.subreddit_name_prefixed}</Link></span>
             <span className={postInfo.distinguished ? postInfo.distinguished === 'admin' ? 'text-red-300' : 'text-green-300' : '' + ' mx-2'}><Link href={'/u/' + postInfo.author}>{'u/' + postInfo.author}</Link></span>
+            <span className="mx-2">{kFormatter(postInfo.score)}</span>
             <span className="mx-2">{dayjs.unix(postInfo.created_utc).fromNow()}</span>
           </div>
           <div className="self-center">

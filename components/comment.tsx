@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
 import Link from 'next/link'
 import showdown from 'showdown'
+import kFormatter from '@lib/numFormat'
 
 dayjs.extend(relativeTime)
 const converter = new showdown.Converter()
@@ -19,7 +20,6 @@ function Comment ({ comment }) {
     <div className="p-4 shadow-xl flex flex-col overflow-hidden">
       <div className="flex container max-w-full"> {/* info container */}
         <div className="voting min-w-12 h-full flex justify-center items-center">
-          <div className="text-gray-300">{comment.score}</div>
         </div>
         <div className="ml-4">
           <div className="mb-2 flex justify-between w-full">
@@ -38,6 +38,7 @@ function Comment ({ comment }) {
                 <div className="rounded-full h-3 w-3 bg-orange-300 inline-block ml-1" title="Comment gilded"></div>
               }
             </div>
+        <div className="text-gray-300">{kFormatter(comment.score)}</div>
           </div>
           <p dangerouslySetInnerHTML={{ __html: converter.makeHtml(comment.body)}} />
           {comment.replies && comment.replies.data.children.map(childComment => {
