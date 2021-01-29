@@ -59,7 +59,7 @@ export default function Comments({ postData }) {
       </div>
 
         {postComments.map(({ data }) => (
-          <Comment comment={data} />
+          <Comment comment={data} key={data.id} />
         ))}
       </div>
     </>

@@ -7,9 +7,17 @@ import html from 'remark-html'
 
 dayjs.extend(relativeTime)
 
-export default function Comment ({ comment }) {
+export default function ParentComment ({ comment }) {
   return (
-    <div className="bg-darker-gray rounded-lg my-2 p-4 shadow-xl flex flex-col overflow-hidden">
+    <div className='bg-darker-gray rounded-lg my-2 p-2'>
+      <Comment comment={comment} />
+    </div>
+  )
+}
+
+function Comment ({ comment }) {
+  return (
+    <div className="p-4 shadow-xl flex flex-col overflow-hidden">
       <div className="flex container max-w-full"> {/* info container */}
         <div className="voting min-w-12 h-full flex justify-center items-center">
           <div className="text-gray-300">{comment.score}</div>
@@ -32,7 +40,12 @@ export default function Comment ({ comment }) {
               }
             </div>
           </div>
-          <CommentBody text={comment.body} />
+          <p>{comment.body}</p>
+          {comment.replies && comment.replies.data.children.map(childComment => {
+            if (childComment.kind !== 'more') {
+              return <Comment comment={childComment.data} key={childComment.data.id} />
+            }
+          })}
         </div>
       </div>
     </div>
