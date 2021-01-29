@@ -26,7 +26,7 @@ export default function Comments({ postData }) {
         <h1 className="text-3xl text-center">{postInfo.title}</h1>
         <div className="my-1 flex self-center text-gray-300">
           <div>
-            <span className="mr-2"><Link href={'/' + postInfo.subreddit_name_prefixed}>{postInfo.subreddit_name_prefixed}</Link></span>
+            <span className="mx-2"><Link href={'/' + postInfo.subreddit_name_prefixed}>{postInfo.subreddit_name_prefixed}</Link></span>
             <span className={postInfo.distinguished ? postInfo.distinguished === 'admin' ? 'text-red-300' : 'text-green-300' : '' + ' mx-2'}><Link href={'/u/' + postInfo.author}>{'u/' + postInfo.author}</Link></span>
             <span className="mx-2">{kFormatter(postInfo.score)}</span>
             <span className="mx-2">{dayjs.unix(postInfo.created_utc).fromNow()}</span>
@@ -61,9 +61,11 @@ export default function Comments({ postData }) {
         }
       </div>
 
-        {postComments.map(({ data }) => (
-          <Comment comment={data} key={data.id} />
-        ))}
+        {postComments.map(comment => {
+          if (comment.kind !== 'more') {
+            return <Comment comment={comment.data} key={comment.data.id} />
+          }
+        })}
       </div>
     </>
   )

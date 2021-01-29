@@ -9,7 +9,7 @@ const converter = new showdown.Converter()
 
 export default function ParentComment ({ comment }) {
   return (
-    <div className='bg-darker-gray rounded-lg my-2 p-2'>
+    <div className='bg-darker-gray rounded-lg my-2 p-6 pl-4 pt-2'>
       <Comment comment={comment} />
     </div>
   )
