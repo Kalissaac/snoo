@@ -21,18 +21,18 @@ export default function Post({ postData }) {
               <div className="mb-2 flex justify-between w-full">
                 <div>
                   <span className="mr-2"><Link href={'/' + postData.subreddit_name_prefixed}>{postData.subreddit_name_prefixed}</Link></span>
-                  <span className={postData.distinguished ? postData.distinguished === 'admin' ? 'text-red-300' : 'text-green-300' : 'text-gray-300' + ' mx-2'}><Link href={'/u/' + postData.author}>{'u/' + postData.author}</Link></span>
+                  <span className={postData.distinguished ? postData.distinguished === 'admin' ? 'text-red-400' : 'text-green-400' : 'text-gray-300' + ' mx-2'}><Link href={'/u/' + postData.author}>{'u/' + postData.author}</Link></span>
                   <span className="text-gray-300 mx-2">{dayjs.unix(postData.created_utc).fromNow()}</span>
                 </div>
                 <div className="self-center">
                   { postData.stickied === true &&
-                    <div className="rounded-full h-3 w-3 bg-green-300 inline-block ml-1" title="Post stickied"></div>
+                    <div className="rounded-full h-3 w-3 bg-green-400 inline-block ml-1" title="Post stickied"></div>
                   }
                   { postData.locked === true &&
-                    <div className="rounded-full h-3 w-3 bg-yellow-300 inline-block ml-1" title="Post locked"></div>
+                    <div className="rounded-full h-3 w-3 bg-yellow-400 inline-block ml-1" title="Post locked"></div>
                   }
                   { postData.archived === true &&
-                    <div className="rounded-full h-3 w-3 bg-orange-300 inline-block ml-1" title="Post archived"></div>
+                    <div className="rounded-full h-3 w-3 bg-orange-400 inline-block ml-1" title="Post archived"></div>
                   }
                 </div>
               </div>
