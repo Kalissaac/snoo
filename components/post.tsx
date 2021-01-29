@@ -13,7 +13,7 @@ export default function Post({ postData }) {
     <Link href={postData.permalink}>
       <a className="w-full h-full block">
         <div className="bg-darker-gray rounded-lg my-6 p-6 shadow-xl flex flex-col overflow-hidden" id={postData.id}>
-          <div className="flex container max-w-full"> {/* info container */}
+          <div className="flex max-w-full"> {/* info container */}
             <div className="voting min-w-12 h-full flex justify-center items-center">
               <div className="text-gray-300">{kFormatter(postData.score)}</div>
             </div>

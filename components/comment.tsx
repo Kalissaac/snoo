@@ -17,7 +17,7 @@ export default function ParentComment ({ comment }) {
 
 function Comment ({ comment }) {
   return (
-    <div className="pl-4 pt-6 shadow-xl flex container overflow-hidden">
+    <div className="pl-4 pt-6 shadow-xl flex" id={comment.id}>
       <div className="voting min-w-12 flex flex-col self-stretch justify-center items-center">
         <div className="text-gray-300">{kFormatter(comment.score)}</div>
         <button className='h-full w-2 mt-2 bg-gray-900 hover:bg-gray-700 rounded-full' onClick={e => e.currentTarget.parentElement.parentElement.getElementsByClassName('commentBody')[0].classList.add('sr-only') !== null && e.currentTarget.parentElement.parentElement.classList.add('cursor-pointer')} />

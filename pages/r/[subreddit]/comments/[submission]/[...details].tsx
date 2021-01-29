@@ -21,7 +21,7 @@ export default function Comments({ postData }) {
       <Head>
         <title>{postInfo.title}</title>
       </Head>
-      <Nav />
+      <Nav showBack />
       <div className="py-5 md:mx-24 lg:mx-32 xl:mx-56 flex flex-col">
         <h1 className="text-3xl text-center">{postInfo.title}</h1>
         <div className="my-1 flex self-center text-gray-300">
