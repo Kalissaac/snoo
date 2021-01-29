@@ -1,28 +1,30 @@
 import Link from 'next/link'
 import { Transition } from '@tailwindui/react'
 import { useState } from 'react'
+import { ChevronLeft, Cloud, Menu } from 'react-feather'
+import { useRouter } from 'next/router'
 
-export default function Nav() {
+export default function Nav({ showBack }: { showBack?: boolean }) {
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
 
   return (
     <>
-      <nav>
-        <ul className="flex justify-between items-center p-8">
-          <li>
-            <Link href="/">
-              <a className="text-blue-500 no-underline text-xl">Snoo</a>
-            </Link>
-          </li>
-          <ul className="flex justify-between items-center space-x-4">
-            <li key="preferences">
-              <button className="btn-blue no-underline focus:shadow-outline" onClick={() => setIsOpen(!isOpen)}>
-                Preferences
-              </button>
-            </li>
-          </ul>
-        </ul>
+      <nav className="flex justify-between items-center p-8">
+        <Link href="/">
+          <a className="text-blue-500 text-lg flex items-center" title='Return home'>{router.route !== '/' && <><Cloud className='mr-4' /> Snoo</>}</a>
+        </Link>
+        <button className="text-xl" title='Open menu' onClick={() => setIsOpen(!isOpen)}>
+          <Menu />
+        </button>
       </nav>
+      {showBack &&
+        <div className='pl-8 -mt-4 text-gray-400'>
+          <button className='flex' onClick={() => router.back()}>
+            <ChevronLeft className='mr-2' /> Return
+          </button>
+        </div>
+      }
 
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 overflow-hidden">
