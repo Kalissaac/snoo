@@ -23,8 +23,8 @@ export default function Page() {
 
 const styles: { [k: string]: React.CSSProperties } = {
   error: {
-    color: '#000',
-    background: '#fff',
+    color: '#fff',
+    background: '#000',
     fontFamily:
       'Poppins, -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", "Fira Sans", Avenir, "Helvetica Neue", "Lucida Grande", sans-serif',
     height: '100vh',
@@ -45,7 +45,7 @@ const styles: { [k: string]: React.CSSProperties } = {
 
   h1: {
     display: 'inline-block',
-    borderRight: '1px solid rgba(0, 0, 0,.3)',
+    borderRight: '1px solid rgba(255, 255, 255,.3)',
     margin: 0,
     marginRight: '20px',
     padding: '10px 23px 10px 0',

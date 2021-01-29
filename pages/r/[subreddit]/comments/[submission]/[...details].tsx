@@ -10,11 +10,6 @@ import Link from 'next/link'
 dayjs.extend(relativeTime)
 
 export default function Comments({ postData }) {
-  if (postData.error) return (
-    <div>
-      error occured
-    </div>
-  )
   const postInfo = postData[0].data.children[0].data
   const postComments = postData[1].data.children
   return (
@@ -69,6 +64,11 @@ export default function Comments({ postData }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { subreddit, submission } = context.params
   const postData = await getPostComments(`/r/${subreddit}/comments/${submission}`)
+  if (postData.error) {
+    return {
+      notFound: true
+    }
+  }
   return {
     props: {
       postData
