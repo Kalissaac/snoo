@@ -8,7 +8,7 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import Link from 'next/link'
 import showdown from 'showdown'
 import kFormatter from '@lib/numFormat'
-import { getProperVideoUrl, getVideoMimeType, isImage, isVideo, isYouTube } from '@lib/media'
+import MediaPreview from '@components/media'
 
 dayjs.extend(relativeTime)
 const converter = new showdown.Converter()
@@ -48,17 +48,7 @@ export default function Comments({ postData }) {
         { postInfo.selftext !== '' &&
           <p className="text-gray-200" dangerouslySetInnerHTML={{ __html: converter.makeHtml(postInfo.selftext) }}></p>
         }
-        { isImage(postInfo.url) &&
-          <img className="max-w-full object-contain" style={{ maxHeight: '36rem' }} src={postInfo.url} alt={postInfo.title}/>
-        }
-        { isVideo(postInfo.url) &&
-          <video controls autoPlay className="h-64 w-64">
-            <source src={getProperVideoUrl(postInfo.url)} type={getVideoMimeType(postInfo.url)} />
-          </video>
-        }
-        { isYouTube(postInfo.url) !== null &&
-          <iframe className="h-64 w-full" src={'https://www.youtube-nocookie.com/embed/' + isYouTube(postInfo.url)[1]} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-        }
+        <MediaPreview post={postInfo} />
       </div>
 
         {postComments.map(comment => {

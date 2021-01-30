@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
 import showdown from 'showdown'
 import kFormatter from '@lib/numFormat'
-import { isImage, isVideo, getProperVideoUrl, getVideoMimeType, isYouTube } from '@lib/media'
+import MediaPreview from '@components/media'
 
 dayjs.extend(relativeTime)
 const converter = new showdown.Converter()
@@ -43,17 +43,7 @@ export default function Post({ postData }) {
             </div>
           </div>
           <div className="ml-16 mt-2"> {/* preview container */}
-            { isImage(postData.url) &&
-              <img className="max-w-full object-contain" style={{ maxHeight: '36rem' }} src={postData.url} alt={postData.title}/>
-            }
-            { isVideo(postData.url) &&
-              <video controls autoPlay className="h-64 w-64">
-                <source src={getProperVideoUrl(postData.url)} type={getVideoMimeType(postData.url)} />
-              </video>
-            }
-            { isYouTube(postData.url) !== null &&
-              <iframe width="100%" height="762" src={'https://www.youtube-nocookie.com/embed/' + isYouTube(postData.url)[1]} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            }
+            <MediaPreview post={postData} />
           </div>
         </div>
       </a>
