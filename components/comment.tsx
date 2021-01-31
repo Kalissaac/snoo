@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
-import Link from 'next/link'
 import showdown from 'showdown'
 import kFormatter from '@lib/numFormat'
+import SpecialLink from '@components/link'
 
 dayjs.extend(relativeTime)
 const converter = new showdown.Converter()
@@ -33,8 +33,8 @@ function Comment ({ comment }) {
       <div className="ml-4 flex-grow" onClick={e => e.currentTarget.parentElement.getElementsByClassName('commentBody')[0].classList.remove('sr-only') !== null && e.currentTarget.parentElement.classList.remove('cursor-pointer')}>
         <div className="mb-2 flex justify-between">
           <div>
-            <span className={comment.distinguished ? comment.distinguished === 'admin' ? 'text-red-400' : 'text-green-400' : 'text-gray-400'}><Link href={'/u/' + comment.author}>{'u/' + comment.author}</Link></span>
-            <span className="text-gray-300 mx-2">{dayjs.unix(comment.created_utc).fromNow()}</span>
+            <span className={comment.distinguished ? comment.distinguished === 'admin' ? 'text-red-400' : 'text-green-400' : 'text-gray-400'}><SpecialLink href={`/u/${comment.author}`} title={`u/${comment.author}`} /></span>
+            <span className="text-gray-300 mx-2" title={dayjs.unix(comment.created_utc).toISOString()}>{dayjs.unix(comment.created_utc).fromNow()}</span>
           </div>
           <div className="self-center">
             { comment.stickied === true &&
