@@ -5,13 +5,12 @@ import Head from 'next/head'
 import Comment from '@components/comment'
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
-import showdown from 'showdown'
 import kFormatter from '@lib/numFormat'
 import MediaPreview from '@components/media'
 import SpecialLink from '@components/link'
+import marked from 'marked'
 
 dayjs.extend(relativeTime)
-const converter = new showdown.Converter()
 
 export default function Comments({ postDataRaw }) {
   const postData = postDataRaw[0].data.children[0].data
@@ -46,7 +45,7 @@ export default function Comments({ postDataRaw }) {
 
         <div className="m-10 self-center"> {/* preview container */}
         { postData.selftext !== '' &&
-          <p className="text-gray-200" dangerouslySetInnerHTML={{ __html: converter.makeHtml(postData.selftext) }}></p>
+          <p className="text-gray-200 markdown" dangerouslySetInnerHTML={{ __html: marked(postData.selftext) }}></p>
         }
         <MediaPreview post={postData} />
       </div>

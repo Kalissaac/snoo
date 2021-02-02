@@ -9,6 +9,10 @@ body {
   min-height: 100vh;
 }
 
+.markdown a {
+  @apply text-blue-500 underline;
+}
+
 /* Start purging... */
 @tailwind components;
 /* Stop purging. */

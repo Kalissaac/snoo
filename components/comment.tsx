@@ -1,11 +1,10 @@
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
-import showdown from 'showdown'
 import kFormatter from '@lib/numFormat'
 import SpecialLink from '@components/link'
+import marked from 'marked'
 
 dayjs.extend(relativeTime)
-const converter = new showdown.Converter()
 
 export default function ParentComment ({ comment }) {
   return (
@@ -49,7 +48,7 @@ function Comment ({ comment }) {
           </div>
         </div>
         <div className='commentBody'>
-          <p dangerouslySetInnerHTML={{ __html: converter.makeHtml(comment.body)}} />
+          <p className='markdown' dangerouslySetInnerHTML={{ __html: marked(comment.body)}} />
           {comment.replies && comment.replies.data.children.map(childComment => {
             if (childComment.kind !== 'more') {
               return <Comment comment={childComment.data} key={childComment.data.id} />

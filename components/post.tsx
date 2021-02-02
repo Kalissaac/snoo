@@ -1,13 +1,12 @@
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
-import showdown from 'showdown'
 import kFormatter from '@lib/numFormat'
 import MediaPreview from '@components/media'
 import { useRouter } from 'next/router'
 import SpecialLink from '@components/link'
+import marked from 'marked'
 
 dayjs.extend(relativeTime)
-const converter = new showdown.Converter()
 
 export default function Post({ postData }) {
   const router = useRouter()
@@ -54,7 +53,7 @@ export default function Post({ postData }) {
           </div>
           <h1 className="text-blue-500 text-xl"><SpecialLink href={postData.permalink} title={postData.title} customClass='hover:border-blue-500' /></h1>
           { postData.selftext !== '' &&
-            <p className="text-gray-400 text-sm" dangerouslySetInnerHTML={{ __html: converter.makeHtml(truncate(postData.selftext, 1000))}} ></p>
+            <p className="text-gray-400 text-sm markdown" dangerouslySetInnerHTML={{ __html: marked(truncate(postData.selftext, 1000))}} ></p>
           }
         </div>
       </div>
