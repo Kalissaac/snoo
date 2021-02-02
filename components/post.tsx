@@ -36,7 +36,7 @@ export default function Post({ postData }) {
           <div className="mb-2 flex justify-between w-full">
             <div>
               <span className="mr-2"><SpecialLink href={`/${postData.subreddit_name_prefixed}`} title={postData.subreddit_name_prefixed} /></span>
-              <span className={postData.distinguished ? postData.distinguished === 'admin' ? 'text-red-400' : 'text-green-400' : 'text-gray-300' + ' mx-2'}><SpecialLink href={`/u/${postData.author}`} title={`u/${postData.author}`} /></span>
+              <span className={postData.distinguished ? (postData.distinguished === 'admin' ? 'text-red-400' : 'text-green-400') : 'text-gray-300' + ' mx-2'}><SpecialLink href={`/u/${postData.author}`} title={`u/${postData.author}`} /></span>
               <span className="text-gray-300 mx-2" title={dayjs.unix(postData.created_utc).toISOString()}>{dayjs.unix(postData.created_utc).fromNow()}</span>
             </div>
             <div className="self-center">

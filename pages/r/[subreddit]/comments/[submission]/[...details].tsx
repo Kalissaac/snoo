@@ -26,19 +26,19 @@ export default function Comments({ postDataRaw }) {
         <div className="my-1 flex self-center text-gray-300">
           <div>
             <span className="mx-2"><SpecialLink href={`/${postData.subreddit_name_prefixed}`} title={postData.subreddit_name_prefixed} /></span>
-            <span className={postData.distinguished ? postData.distinguished === 'admin' ? 'text-red-300' : 'text-green-300' : '' + ' mx-2'}><SpecialLink href={`/u/${postData.author}`} title={`u/${postData.author}`} /></span>
+            <span className={postData.distinguished ? (postData.distinguished === 'admin' ? 'text-red-400' : 'text-green-400') : '' + ' mx-2'}><SpecialLink href={`/u/${postData.author}`} title={`u/${postData.author}`} /></span>
             <span className="mx-2">{kFormatter(postData.score)}</span>
             <span className="mx-2" title={dayjs.unix(postData.created_utc).toISOString()}>{dayjs.unix(postData.created_utc).fromNow()}</span>
           </div>
           <div className="self-center">
             { postData.stickied === true &&
-              <div className="rounded-full h-3 w-3 bg-green-300 inline-block ml-1" title="Post stickied"></div>
+              <div className="rounded-full h-3 w-3 bg-green-400 inline-block ml-1" title="Post stickied"></div>
             }
             { postData.locked === true &&
-              <div className="rounded-full h-3 w-3 bg-yellow-300 inline-block ml-1" title="Post locked"></div>
+              <div className="rounded-full h-3 w-3 bg-yellow-400 inline-block ml-1" title="Post locked"></div>
             }
             { postData.archived === true &&
-              <div className="rounded-full h-3 w-3 bg-orange-300 inline-block ml-1" title="Post archived"></div>
+              <div className="rounded-full h-3 w-3 bg-orange-400 inline-block ml-1" title="Post archived"></div>
             }
           </div>
         </div>
