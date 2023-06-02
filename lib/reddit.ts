@@ -1,4 +1,4 @@
-export async function getRedditPosts (subreddit: String = '') {
+export async function getRedditPosts(subreddit: string = '') {
   if (subreddit === '') {
     const data = await fetch('https://reddit.com/.json')
     return await data.json()
@@ -8,7 +8,7 @@ export async function getRedditPosts (subreddit: String = '') {
   }
 }
 
-export async function getSubredditInfo (subreddit: String = '') {
+export async function getSubredditInfo(subreddit: string = '') {
   if (subreddit === '') {
     return {}
   } else {
@@ -17,7 +17,7 @@ export async function getSubredditInfo (subreddit: String = '') {
   }
 }
 
-export async function getPostComments (permalink: String = '') {
+export async function getPostComments(permalink: string = '') {
   if (permalink === '') {
     return {}
   } else {

@@ -11,8 +11,12 @@ function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
 
   useEffect(() => {
-    const startLoader = (): void => { NProgress.start() }
-    const stopLoader = (): void => { NProgress.done() }
+    const startLoader = (): void => {
+      NProgress.start()
+    }
+    const stopLoader = (): void => {
+      NProgress.done()
+    }
 
     router.events.on('routeChangeStart', startLoader)
     router.events.on('routeChangeComplete', stopLoader)

@@ -32,7 +32,7 @@ const styles: { [k: string]: React.CSSProperties } = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   desc: {
@@ -40,7 +40,7 @@ const styles: { [k: string]: React.CSSProperties } = {
     textAlign: 'left',
     lineHeight: '49px',
     height: '49px',
-    verticalAlign: 'middle',
+    verticalAlign: 'middle'
   },
 
   h1: {
@@ -51,7 +51,7 @@ const styles: { [k: string]: React.CSSProperties } = {
     padding: '10px 23px 10px 0',
     fontSize: '24px',
     fontWeight: 500,
-    verticalAlign: 'top',
+    verticalAlign: 'top'
   },
 
   h2: {
@@ -59,6 +59,6 @@ const styles: { [k: string]: React.CSSProperties } = {
     fontWeight: 'normal',
     lineHeight: 'inherit',
     margin: 0,
-    padding: 0,
-  },
+    padding: 0
+  }
 }
