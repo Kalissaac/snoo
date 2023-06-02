@@ -8,7 +8,7 @@ dayjs.extend(relativeTime)
 
 export default function ParentComment({ comment }) {
   return (
-    <div className='p-6 pt-2 my-2 rounded-lg bg-darker-gray'>
+    <div className='p-6 pt-2 my-2 rounded-lg shadow-sm bg-gray-50 dark:bg-darker-gray'>
       <Comment comment={comment} />
     </div>
   )
@@ -24,17 +24,11 @@ export default function ParentComment({ comment }) {
 
 function Comment({ comment }) {
   return (
-    <div className='flex pt-4 shadow-xl' id={comment.id}>
-      <div className='flex flex-col items-center self-stretch justify-center voting min-w-12'>
-        {comment.score === 1 ? (
-          <div className='text-gray-300' title='Score hidden'>
-            •
-          </div>
-        ) : (
-          <div className='text-gray-300'>{kFormatter(comment.score)}</div>
-        )}
+    <div className='flex pt-4' id={comment.id}>
+      <div className='flex flex-col items-center self-stretch justify-center text-gray-500 voting min-w-12 dark:text-gray-300'>
+        {comment.score === 1 ? <p title='Score hidden'>•</p> : <p>{kFormatter(comment.score)}</p>}
         <button
-          className='w-2 h-full mt-2 bg-gray-900 rounded-full xl:w-1 hover:bg-gray-700'
+          className='w-2 h-full mt-2 transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-700'
           onClick={e =>
             e.currentTarget.parentElement.parentElement
               .getElementsByClassName('commentBody')[0]
@@ -57,19 +51,25 @@ function Comment({ comment }) {
                 comment.distinguished
                   ? comment.distinguished === 'admin'
                     ? 'text-red-400'
-                    : 'text-green-400'
-                  : 'text-gray-400'
+                    : 'text-green-600 dark:text-green-400'
+                  : 'text-gray-600 dark:text-gray-400'
               }
             >
-              <SpecialLink href={`/u/${comment.author}`} title={`u/${comment.author}`} />
+              <SpecialLink href={`/u/${comment.author}`} children={`u/${comment.author}`} />
             </span>
-            <span className='mx-2 text-gray-300' title={dayjs.unix(comment.created_utc).toISOString()}>
+            <span
+              className='mx-2 text-gray-600 dark:text-gray-300'
+              title={dayjs.unix(comment.created_utc).toISOString()}
+            >
               {dayjs.unix(comment.created_utc).fromNow()}
             </span>
           </div>
           <div className='self-center'>
             {comment.stickied === true && (
-              <div className='inline-block w-3 h-3 ml-1 bg-green-400 rounded-full' title='Comment stickied'></div>
+              <div
+                className='inline-block w-3 h-3 ml-1 bg-green-600 dark:bg-green-400 rounded-full'
+                title='Comment stickied'
+              ></div>
             )}
             {comment.edited === true && (
               <div className='inline-block w-3 h-3 ml-1 bg-yellow-400 rounded-full' title='Comment edited'></div>

@@ -28,64 +28,65 @@ export default function Post({ postData }) {
 
   return (
     <div
-      className='flex flex-col p-6 my-6 overflow-hidden rounded-lg shadow-xl bg-darker-gray'
+      className='flex max-w-full p-5 my-6 overflow-hidden border border-gray-300 rounded-lg shadow-sm cursor-pointer dark:border-gray-800 bg-gray-50 dark:bg-darker-gray'
       id={postData.id}
       onClick={() => router.push(postData.permalink)}
     >
-      <div className='flex max-w-full'>
-        {' '}
-        {/* info container */}
-        <div className='flex items-center justify-center h-full voting min-w-12'>
-          <div className='text-gray-300'>{kFormatter(postData.score)}</div>
-        </div>
-        <div className='flex-grow ml-4'>
-          <div className='flex justify-between w-full mb-2'>
-            <div>
-              <span className='mr-2'>
-                <SpecialLink href={`/${postData.subreddit_name_prefixed}`} title={postData.subreddit_name_prefixed} />
-              </span>
-              <span
-                className={
-                  postData.distinguished
-                    ? postData.distinguished === 'admin'
-                      ? 'text-red-400'
-                      : 'text-green-400'
-                    : 'text-gray-300' + ' mx-2'
-                }
-              >
-                <SpecialLink href={`/u/${postData.author}`} title={`u/${postData.author}`} />
-              </span>
-              <span className='mx-2 text-gray-300' title={dayjs.unix(postData.created_utc).toISOString()}>
-                {dayjs.unix(postData.created_utc).fromNow()}
-              </span>
-            </div>
-            <div className='self-center'>
-              {postData.stickied === true && (
-                <div className='inline-block w-3 h-3 ml-1 bg-green-400 rounded-full' title='Post stickied'></div>
-              )}
-              {postData.locked === true && (
-                <div className='inline-block w-3 h-3 ml-1 bg-yellow-400 rounded-full' title='Post locked'></div>
-              )}
-              {postData.archived === true && (
-                <div className='inline-block w-3 h-3 ml-1 bg-orange-400 rounded-full' title='Post archived'></div>
-              )}
-            </div>
-          </div>
-          <h1 className='text-xl text-blue-500'>
-            <SpecialLink href={postData.permalink} title={postData.title} customClass='hover:border-blue-500' />
-          </h1>
-          {postData.selftext !== '' && (
-            <div
-              className='text-sm text-gray-400 markdown'
-              dangerouslySetInnerHTML={{ __html: marked(truncate(postData.selftext, 1000)) }}
-            />
-          )}
-        </div>
+      {/* info container */}
+      <div className='flex items-center justify-center h-full voting min-w-12'>
+        <p className='text-gray-700 dark:text-gray-300'>{kFormatter(postData.score)}</p>
       </div>
-      <div className='mt-2 ml-16'>
-        {' '}
-        {/* preview container */}
-        <MediaPreview post={postData} />
+      <div className='flex-grow ml-4'>
+        <div className='flex justify-between w-full mb-2'>
+          <div className='space-x-4 text-gray-700 dark:text-gray-300'>
+            <span>
+              <SpecialLink href={`/${postData.subreddit_name_prefixed}`} children={postData.subreddit_name_prefixed} />
+            </span>
+            <span
+              className={
+                postData.distinguished
+                  ? postData.distinguished === 'admin'
+                    ? 'text-red-400'
+                    : 'text-green-600 dark:text-green-400'
+                  : ''
+              }
+            >
+              <SpecialLink href={`/u/${postData.author}`} children={`u/${postData.author}`} />
+            </span>
+            <span title={dayjs.unix(postData.created_utc).toLocaleString()}>
+              {dayjs.unix(postData.created_utc).fromNow()}
+            </span>
+          </div>
+          <div className='self-center'>
+            {postData.stickied === true && (
+              <div
+                className='inline-block w-3 h-3 ml-1 bg-green-600 rounded-full dark:bg-green-400'
+                title='Post stickied'
+              ></div>
+            )}
+            {postData.locked === true && (
+              <div className='inline-block w-3 h-3 ml-1 bg-yellow-400 rounded-full' title='Post locked'></div>
+            )}
+            {postData.archived === true && (
+              <div className='inline-block w-3 h-3 ml-1 bg-orange-400 rounded-full' title='Post archived'></div>
+            )}
+          </div>
+        </div>
+        <h1 className='text-lg font-medium text-orange-600a'>
+          <SpecialLink href={postData.permalink} children={postData.title} className='!hover:border-orange-500' />
+        </h1>
+        {postData.selftext !== '' && (
+          <div
+            className='mt-1 text-sm text-gray-800 dark:text-gray-400 markdown'
+            dangerouslySetInnerHTML={{ __html: marked(truncate(postData.selftext, 1000)) }}
+          />
+        )}
+        {!postData.is_self && (
+          <div className='mt-4'>
+            {/* preview container */}
+            <MediaPreview post={postData} />
+          </div>
+        )}
       </div>
     </div>
   )

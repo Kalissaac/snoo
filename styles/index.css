@@ -1,16 +1,22 @@
 @tailwind base;
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 /* Write your own custom base styles here */
 
 body {
-  font-family: 'Poppins', sans-serif;
-  @apply text-white bg-black;
-  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  @apply min-h-screen bg-gray-100 dark:text-gray-50 dark:bg-gray-900;
+}
+
+.markdown p {
+  @apply mb-4;
 }
 
 .markdown a {
-  @apply text-blue-500 underline;
+  @apply text-orange-500 underline;
+}
+
+.markdown pre {
+  @apply mb-4 whitespace-break-spaces;
 }
 
 /* Start purging... */
@@ -18,9 +24,6 @@ body {
 /* Stop purging. */
 
 /* Write you own custom component styles here */
-.btn-blue {
-  @apply px-4 py-2 font-bold text-white bg-blue-500 rounded;
-}
 
 /* Start purging... */
 @tailwind utilities;

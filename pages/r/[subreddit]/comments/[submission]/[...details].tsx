@@ -21,23 +21,23 @@ export default function Comments({ postDataRaw }) {
         <title>{postData.title}</title>
       </Head>
       <Nav showBack />
-      <div className='flex flex-col max-w-4xl py-5 mx-auto'>
+      <div className='flex flex-col max-w-3xl px-5 py-5 mx-auto'>
         <h1 className='mx-4 text-3xl text-center md:mx-0'>{postData.title}</h1>
-        <div className='flex self-center my-1 text-gray-300'>
+        <div className='flex self-center my-1 text-gray-600 dark:text-gray-300'>
           <div>
             <span className='mx-2'>
-              <SpecialLink href={`/${postData.subreddit_name_prefixed}`} title={postData.subreddit_name_prefixed} />
+              <SpecialLink href={`/${postData.subreddit_name_prefixed}`} children={postData.subreddit_name_prefixed} />
             </span>
             <span
               className={
                 postData.distinguished
                   ? postData.distinguished === 'admin'
                     ? 'text-red-400'
-                    : 'text-green-400'
+                    : 'text-green-600 dark:text-green-400'
                   : '' + ' mx-2'
               }
             >
-              <SpecialLink href={`/u/${postData.author}`} title={`u/${postData.author}`} />
+              <SpecialLink href={`/u/${postData.author}`} children={`u/${postData.author}`} />
             </span>
             <span className='mx-2'>{kFormatter(postData.score)}</span>
             <span className='mx-2' title={dayjs.unix(postData.created_utc).toISOString()}>
@@ -46,7 +46,10 @@ export default function Comments({ postDataRaw }) {
           </div>
           <div className='self-center'>
             {postData.stickied === true && (
-              <div className='inline-block w-3 h-3 ml-1 bg-green-400 rounded-full' title='Post stickied'></div>
+              <div
+                className='inline-block w-3 h-3 ml-1 bg-green-600 dark:bg-green-400 rounded-full'
+                title='Post stickied'
+              ></div>
             )}
             {postData.locked === true && (
               <div className='inline-block w-3 h-3 ml-1 bg-yellow-400 rounded-full' title='Post locked'></div>
@@ -57,13 +60,15 @@ export default function Comments({ postDataRaw }) {
           </div>
         </div>
 
-        <div className='self-center m-10'>
-          {' '}
+        <div className='my-10'>
           {/* preview container */}
           {postData.selftext !== '' && (
-            <div className='text-gray-200 markdown' dangerouslySetInnerHTML={{ __html: marked(postData.selftext) }} />
+            <div
+              className='text-gray-700 dark:text-gray-200 markdown'
+              dangerouslySetInnerHTML={{ __html: marked(postData.selftext) }}
+            />
           )}
-          <MediaPreview post={postData} />
+          {!postData.is_self && <MediaPreview post={postData} />}
         </div>
 
         {postComments.map(comment => {

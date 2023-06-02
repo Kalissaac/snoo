@@ -12,10 +12,10 @@ export default function IndexPage({ redditPosts }) {
       <Nav />
 
       <div className='py-5'>
-        <h1 className='text-5xl text-center text-gray-100'>Snooooo</h1>
+        <h1 className='text-5xl text-center dark:text-gray-100'>the front page</h1>
       </div>
 
-      <div className='md:mx-24 lg:mx-32 xl:mx-56'>
+      <div className='max-w-3xl px-5 mx-auto'>
         {redditPosts.data.children.map(({ data }) => (
           <Post postData={data} key={data.id} />
         ))}
