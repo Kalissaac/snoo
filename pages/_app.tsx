@@ -4,6 +4,7 @@ import NProgress from 'nprogress'
 import '@styles/nprogress.css'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { SWRConfig } from 'swr'
 
 NProgress.configure({ showSpinner: false })
 
@@ -29,7 +30,16 @@ function App({ Component, pageProps }: AppProps) {
     }
   }, [])
 
-  return <Component {...pageProps} />
+  return (
+    <SWRConfig
+      value={{
+        fetcher: (resource: string, init) =>
+          fetch(resource.startsWith('/') ? `https://www.reddit.com${resource}` : resource, init).then(res => res.json())
+      }}
+    >
+      <Component {...pageProps} />
+    </SWRConfig>
+  )
 }
 
 export default App

@@ -1,9 +1,15 @@
+import LoadMoreButton from '@components/loadmore'
 import Nav from '@components/nav'
 import Post from '@components/post'
-import { getRedditPosts, getSubredditInfo } from '@lib/reddit'
+import { getKeyForSubredditPosts, getSubredditInfo } from '@lib/reddit'
 import { GetServerSideProps } from 'next'
+import useSWRInfinite from 'swr/infinite'
 
-export default function SubredditPage({ redditPosts, subredditInfo }) {
+export default function SubredditPage({ subredditInfo }) {
+  const { data, isLoading, isValidating, setSize } = useSWRInfinite(
+    getKeyForSubredditPosts(subredditInfo.data.display_name)
+  )
+
   return (
     <div>
       <Nav />
@@ -12,10 +18,10 @@ export default function SubredditPage({ redditPosts, subredditInfo }) {
         <p className='text-xl text-center text-gray-600 dark:text-gray-300'>{subredditInfo.data.title}</p>
       </div>
 
-      <div className='max-w-3xl px-5 mx-auto'>
-        {redditPosts.data.children.map(({ data }) => (
-          <Post postData={data} key={data.id} />
-        ))}
+      <div className='max-w-3xl px-5 pb-10 mx-auto'>
+        {data?.map(page => page.data?.children.map(({ data }) => <Post postData={data} key={data.id} />))}
+
+        <LoadMoreButton setSize={setSize} isLoading={isLoading || isValidating} />
       </div>
     </div>
   )
@@ -24,11 +30,9 @@ export default function SubredditPage({ redditPosts, subredditInfo }) {
 export const getServerSideProps: GetServerSideProps = async context => {
   const { subreddit } = context.params
   if (!subreddit || subreddit === '') return //context.res.redirect('/')
-  const redditPosts = await getRedditPosts(subreddit as string)
   const subredditInfo = await getSubredditInfo(subreddit as string)
   return {
     props: {
-      redditPosts,
       subredditInfo
     }
   }
