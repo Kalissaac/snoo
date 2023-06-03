@@ -28,19 +28,21 @@ export default function Post({ postData }) {
 
   return (
     <div
-      className='flex max-w-full p-5 my-6 overflow-hidden border border-gray-300 rounded-lg shadow-sm cursor-pointer dark:border-gray-800 bg-gray-50 dark:bg-darker-gray'
+      className='flex max-w-full p-5 my-6 overflow-hidden border border-gray-200 rounded-lg shadow-sm cursor-pointer dark:border-gray-800 bg-gray-50 dark:bg-darker-gray'
       id={postData.id}
       onClick={() => router.push(postData.permalink)}
     >
       {/* info container */}
-      <div className='flex items-center justify-center h-full voting min-w-12'>
+      <div className='flex items-center justify-center h-full voting min-w-[2.5rem]'>
         <p className='text-gray-700 dark:text-gray-300'>{kFormatter(postData.score)}</p>
       </div>
       <div className='flex-grow ml-4'>
         <div className='flex justify-between w-full mb-2'>
           <div className='space-x-4 text-gray-700 dark:text-gray-300'>
             <span>
-              <SpecialLink href={`/${postData.subreddit_name_prefixed}`} children={postData.subreddit_name_prefixed} />
+              <SpecialLink href={`/${postData.subreddit_name_prefixed}`} onClick={e => e.stopPropagation()}>
+                {postData.subreddit_name_prefixed}
+              </SpecialLink>
             </span>
             <span
               className={
@@ -51,11 +53,12 @@ export default function Post({ postData }) {
                   : ''
               }
             >
-              <SpecialLink href={`/u/${postData.author}`} children={`u/${postData.author}`} />
+              <SpecialLink href={`/u/${postData.author}`}>u/{postData.author}</SpecialLink>
             </span>
             <span title={dayjs.unix(postData.created_utc).toLocaleString()}>
               {dayjs.unix(postData.created_utc).fromNow()}
             </span>
+            <span>{postData.num_comments} comments</span>
           </div>
           <div className='self-center'>
             {postData.stickied === true && (
@@ -73,7 +76,9 @@ export default function Post({ postData }) {
           </div>
         </div>
         <h1 className='text-lg font-medium text-orange-600a'>
-          <SpecialLink href={postData.permalink} children={postData.title} className='!hover:border-orange-500' />
+          <SpecialLink href={postData.permalink} className='!hover:border-orange-500'>
+            {postData.title}
+          </SpecialLink>
         </h1>
         {postData.selftext !== '' && (
           <div

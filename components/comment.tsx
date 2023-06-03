@@ -45,29 +45,31 @@ function Comment({ comment }) {
         }
       >
         <div className='flex justify-between mb-2'>
-          <div>
+          <div className='space-x-4 text-gray-600 dark:text-gray-300'>
             <span
               className={
                 comment.distinguished
                   ? comment.distinguished === 'admin'
                     ? 'text-red-400'
                     : 'text-green-600 dark:text-green-400'
-                  : 'text-gray-600 dark:text-gray-400'
+                  : 'dark:text-gray-400'
               }
             >
-              <SpecialLink href={`/u/${comment.author}`} children={`u/${comment.author}`} />
+              <SpecialLink href={`/u/${comment.author}`}>u/{comment.author}</SpecialLink>
             </span>
-            <span
-              className='mx-2 text-gray-600 dark:text-gray-300'
-              title={dayjs.unix(comment.created_utc).toISOString()}
-            >
+            <span title={dayjs.unix(comment.created_utc).toISOString()}>
               {dayjs.unix(comment.created_utc).fromNow()}
             </span>
+            {comment.author_flair_text && (
+              <span className='p-1 px-3 text-sm bg-gray-100 rounded-full dark:bg-gray-900'>
+                {comment.author_flair_text}
+              </span>
+            )}
           </div>
           <div className='self-center'>
             {comment.stickied === true && (
               <div
-                className='inline-block w-3 h-3 ml-1 bg-green-600 dark:bg-green-400 rounded-full'
+                className='inline-block w-3 h-3 ml-1 bg-green-600 rounded-full dark:bg-green-400'
                 title='Comment stickied'
               ></div>
             )}

@@ -26,7 +26,9 @@ export default function Comments({ postDataRaw }) {
         <div className='flex self-center my-1 text-gray-600 dark:text-gray-300'>
           <div>
             <span className='mx-2'>
-              <SpecialLink href={`/${postData.subreddit_name_prefixed}`} children={postData.subreddit_name_prefixed} />
+              <SpecialLink href={`/${postData.subreddit_name_prefixed}`}>
+                {postData.subreddit_name_prefixed}
+              </SpecialLink>
             </span>
             <span
               className={
@@ -37,7 +39,7 @@ export default function Comments({ postDataRaw }) {
                   : '' + ' mx-2'
               }
             >
-              <SpecialLink href={`/u/${postData.author}`} children={`u/${postData.author}`} />
+              <SpecialLink href={`/u/${postData.author}`}>u/{postData.author}</SpecialLink>
             </span>
             <span className='mx-2'>{kFormatter(postData.score)}</span>
             <span className='mx-2' title={dayjs.unix(postData.created_utc).toISOString()}>
@@ -47,7 +49,7 @@ export default function Comments({ postDataRaw }) {
           <div className='self-center'>
             {postData.stickied === true && (
               <div
-                className='inline-block w-3 h-3 ml-1 bg-green-600 dark:bg-green-400 rounded-full'
+                className='inline-block w-3 h-3 ml-1 bg-green-600 rounded-full dark:bg-green-400'
                 title='Post stickied'
               ></div>
             )}
