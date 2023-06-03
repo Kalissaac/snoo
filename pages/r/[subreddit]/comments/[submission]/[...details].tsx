@@ -41,7 +41,9 @@ export default function Comments({ postDataRaw }) {
             >
               <SpecialLink href={`/u/${postData.author}`}>u/{postData.author}</SpecialLink>
             </span>
-            <span className='mx-2'>{kFormatter(postData.score)}</span>
+            <span className='mx-2'>
+              {kFormatter(postData.score)} point{postData.score !== 1 && 's'}
+            </span>
             <span className='mx-2' title={dayjs.unix(postData.created_utc).toISOString()}>
               {dayjs.unix(postData.created_utc).fromNow()}
             </span>
@@ -51,13 +53,19 @@ export default function Comments({ postDataRaw }) {
               <div
                 className='inline-block w-3 h-3 ml-1 bg-green-600 rounded-full dark:bg-green-400'
                 title='Post stickied'
-              ></div>
+              />
             )}
             {postData.locked === true && (
-              <div className='inline-block w-3 h-3 ml-1 bg-yellow-400 rounded-full' title='Post locked'></div>
+              <div
+                className='inline-block w-3 h-3 ml-1 bg-yellow-600 rounded-full dark:bg-yellow-400'
+                title='Post locked'
+              />
             )}
             {postData.archived === true && (
-              <div className='inline-block w-3 h-3 ml-1 bg-orange-400 rounded-full' title='Post archived'></div>
+              <div
+                className='inline-block w-3 h-3 ml-1 bg-orange-600 rounded-full dark:bg-orange-400'
+                title='Post archived'
+              />
             )}
           </div>
         </div>

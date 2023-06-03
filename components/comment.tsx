@@ -28,17 +28,19 @@ function Comment({ comment }) {
       <div className='flex flex-col items-center self-stretch justify-center text-gray-500 voting min-w-12 dark:text-gray-300'>
         {comment.score === 1 ? <p title='Score hidden'>•</p> : <p>{kFormatter(comment.score)}</p>}
         <button
-          className='w-2 h-full mt-2 transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-700'
+          className='h-full px-2 mt-2 group'
           onClick={e =>
             e.currentTarget.parentElement.parentElement
               .getElementsByClassName('commentBody')[0]
               .classList.add('sr-only') !== null &&
             e.currentTarget.parentElement.parentElement.classList.add('cursor-pointer')
           }
-        />
+        >
+          <div className='w-2 h-full transition-colors bg-gray-100 rounded-full group-hover:bg-gray-200 dark:bg-gray-900 dark:group-hover:bg-gray-700' />
+        </button>
       </div>
       <div
-        className='flex-grow ml-4'
+        className='flex-1 ml-4'
         onClick={e =>
           e.currentTarget.parentElement.getElementsByClassName('commentBody')[0].classList.remove('sr-only') !== null &&
           e.currentTarget.parentElement.classList.remove('cursor-pointer')
@@ -48,7 +50,9 @@ function Comment({ comment }) {
           <div className='space-x-4 text-gray-600 dark:text-gray-300'>
             <span
               className={
-                comment.distinguished
+                comment.is_submitter
+                  ? 'text-blue-600 dark:text-blue-400'
+                  : comment.distinguished
                   ? comment.distinguished === 'admin'
                     ? 'text-red-400'
                     : 'text-green-600 dark:text-green-400'
@@ -57,7 +61,7 @@ function Comment({ comment }) {
             >
               <SpecialLink href={`/u/${comment.author}`}>u/{comment.author}</SpecialLink>
             </span>
-            <span title={dayjs.unix(comment.created_utc).toISOString()}>
+            <span title={dayjs.unix(comment.created_utc).toLocaleString()}>
               {dayjs.unix(comment.created_utc).fromNow()}
             </span>
             {comment.author_flair_text && (
@@ -71,13 +75,13 @@ function Comment({ comment }) {
               <div
                 className='inline-block w-3 h-3 ml-1 bg-green-600 rounded-full dark:bg-green-400'
                 title='Comment stickied'
-              ></div>
+              />
             )}
             {comment.edited === true && (
-              <div className='inline-block w-3 h-3 ml-1 bg-yellow-400 rounded-full' title='Comment edited'></div>
+              <div className='inline-block w-3 h-3 ml-1 bg-yellow-400 rounded-full' title='Comment edited' />
             )}
             {comment.gilded === true && (
-              <div className='inline-block w-3 h-3 ml-1 bg-orange-400 rounded-full' title='Comment gilded'></div>
+              <div className='inline-block w-3 h-3 ml-1 bg-orange-400 rounded-full' title='Comment gilded' />
             )}
           </div>
         </div>
