@@ -7,7 +7,7 @@ export default function MediaPreview({ post }): JSX.Element {
 
   if (isVideo(post.url)) {
     return (
-      <video controls autoPlay className='max-w-full max-h-[36rem] mx-auto'>
+      <video controls autoPlay muted className='max-w-full max-h-[36rem] mx-auto'>
         <source src={getProperVideoUrl(post)} type={getVideoMimeType(post.url)} />
       </video>
     )
