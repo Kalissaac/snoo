@@ -2,7 +2,9 @@ import SpecialLink from './link'
 
 export default function MediaPreview({ post }): JSX.Element {
   if (isImage(post.url)) {
-    return <img className='object-contain max-w-full mx-auto max-h-[36rem]' src={post.url} alt={post.title} />
+    return (
+      <img className='object-contain max-w-full mx-auto max-h-[36rem]' src={post.url} alt={post.title} loading='lazy' />
+    )
   }
 
   if (isVideo(post.url)) {
