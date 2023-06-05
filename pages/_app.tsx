@@ -5,8 +5,12 @@ import '@styles/nprogress.css'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { SWRConfig } from 'swr'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 NProgress.configure({ showSpinner: false })
+
+dayjs.extend(relativeTime)
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter()

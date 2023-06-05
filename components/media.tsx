@@ -1,15 +1,22 @@
+import { type HTMLAttributes } from 'react'
 import SpecialLink from './link'
 
-export default function MediaPreview({ post }): JSX.Element {
+export default function MediaPreview({ post, ...props }: { post: any } & HTMLAttributes<HTMLElement>): JSX.Element {
   if (isImage(post.url)) {
     return (
-      <img className='object-contain max-w-full mx-auto max-h-[36rem]' src={post.url} alt={post.title} loading='lazy' />
+      <img
+        className='object-contain max-w-full mx-auto max-h-[36rem]'
+        src={post.url}
+        alt={post.title}
+        loading='lazy'
+        {...props}
+      />
     )
   }
 
   if (isVideo(post.url)) {
     return (
-      <video controls autoPlay muted className='max-w-full max-h-[36rem] mx-auto'>
+      <video controls autoPlay muted className='max-w-full max-h-[36rem] mx-auto relative' {...props}>
         <source src={getProperVideoUrl(post)} type={getVideoMimeType(post.url)} />
       </video>
     )
@@ -25,12 +32,13 @@ export default function MediaPreview({ post }): JSX.Element {
         className='relative z-10 border-0 aspect-video'
         allow='autoplay; encrypted-media; picture-in-picture'
         allowFullScreen
+        {...props}
       />
     )
   }
 
   return (
-    <SpecialLink href={post.url} className='text-sm text-orange-500'>
+    <SpecialLink href={post.url} className='relative text-sm text-orange-500'>
       {post.url}
     </SpecialLink>
   )

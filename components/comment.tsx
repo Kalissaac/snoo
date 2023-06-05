@@ -1,10 +1,7 @@
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import kFormatter from '@lib/numFormat'
 import SpecialLink from '@components/link'
-import marked from 'marked'
-
-dayjs.extend(relativeTime)
+import RenderedMarkdown from './fragments/renderedMarkdown'
 
 export default function ParentComment({ comment }) {
   return (
@@ -25,7 +22,7 @@ export default function ParentComment({ comment }) {
 function Comment({ comment }) {
   return (
     <div className='flex pt-4' id={comment.id}>
-      <div className='flex flex-col items-center self-stretch justify-center text-gray-500 voting min-w-12 dark:text-gray-300'>
+      <div className='flex flex-col items-center self-stretch justify-center text-gray-500 voting min-w-12 dark:text-gray-400'>
         {comment.score === 1 ? <p title='Score hidden'>•</p> : <p>{kFormatter(comment.score)}</p>}
         <button
           className='h-full px-2 mt-2 group'
@@ -47,16 +44,16 @@ function Comment({ comment }) {
         }
       >
         <div className='flex justify-between mb-2'>
-          <div className='space-x-4 text-gray-600 dark:text-gray-300'>
+          <div className='space-x-4 text-gray-600 dark:text-gray-400'>
             <span
               className={
-                comment.is_submitter
-                  ? 'text-blue-600 dark:text-blue-400'
-                  : comment.distinguished
+                comment.distinguished
                   ? comment.distinguished === 'admin'
-                    ? 'text-red-400'
+                    ? 'text-red-600 dark:text-red-400'
                     : 'text-green-600 dark:text-green-400'
-                  : 'dark:text-gray-400'
+                  : comment.is_submitter
+                  ? 'text-blue-600 dark:text-blue-400'
+                  : 'dark:text-gray-300'
               }
             >
               <SpecialLink href={`/u/${comment.author}`}>u/{comment.author}</SpecialLink>
@@ -78,15 +75,21 @@ function Comment({ comment }) {
               />
             )}
             {comment.edited === true && (
-              <div className='inline-block w-3 h-3 ml-1 bg-yellow-400 rounded-full' title='Comment edited' />
+              <div
+                className='inline-block w-3 h-3 ml-1 bg-yellow-600 rounded-full dark:bg-yellow-400'
+                title='Comment edited'
+              />
             )}
             {comment.gilded === true && (
-              <div className='inline-block w-3 h-3 ml-1 bg-orange-400 rounded-full' title='Comment gilded' />
+              <div
+                className='inline-block w-3 h-3 ml-1 bg-orange-600 rounded-full dark:bg-orange-400'
+                title='Comment gilded'
+              />
             )}
           </div>
         </div>
         <div className='commentBody'>
-          <div className='markdown' dangerouslySetInnerHTML={{ __html: marked(comment.body) }} />
+          <RenderedMarkdown source={comment.body} />
           {comment.replies &&
             comment.replies.data.children.map(childComment => {
               if (childComment.kind !== 'more') {
