@@ -16,13 +16,14 @@ export default function MediaPreview({ post }): JSX.Element {
   }
 
   if (isYouTube(post.url) !== null) {
+    const videoId = isYouTube(post.url)[1]
     return (
       <iframe
         width='100%'
-        height='762'
-        src={'https://www.youtube-nocookie.com/embed/' + isYouTube(post.url)[1]}
-        frameBorder='0'
-        allow='autoplay; encrypted-media'
+        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
+        srcDoc={`<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto}span{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}</style><a href="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1"><img src=https://img.youtube.com/vi/${videoId}/hqdefault.jpg><span>▶</span></a>`}
+        className='relative z-10 border-0 aspect-video'
+        allow='autoplay; encrypted-media; picture-in-picture'
         allowFullScreen
       />
     )
