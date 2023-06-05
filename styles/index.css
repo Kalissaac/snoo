@@ -7,23 +7,19 @@ body {
   @apply min-h-screen bg-gray-100 dark:text-gray-50 dark:bg-gray-900;
 }
 
-.markdown p {
-  @apply mb-4;
-}
-
-.markdown a {
-  @apply text-orange-500 underline;
-}
-
-.markdown pre {
-  @apply mb-4 whitespace-break-spaces;
-}
-
 /* Start purging... */
 @tailwind components;
 /* Stop purging. */
 
 /* Write you own custom component styles here */
+
+.prose a {
+  @apply text-orange-500;
+}
+
+.prose h1 {
+  @apply text-3xl;
+}
 
 /* Start purging... */
 @tailwind utilities;
