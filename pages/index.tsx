@@ -1,5 +1,5 @@
 import Nav from '@components/nav'
-import Post from '@components/post'
+import Post, { PostSkeleton } from '@components/post'
 import Head from 'next/head'
 import { getKeyForSubredditPosts } from '@lib/reddit'
 import useSWRInfinite from 'swr/infinite'
@@ -20,7 +20,10 @@ export default function IndexPage() {
       </div>
 
       <div className='max-w-3xl px-5 pb-10 mx-auto'>
-        {data?.map(page => page.data?.children.map(({ data }) => <Post postData={data} key={data.id} />))}
+        {data?.map(page => page.data?.children.map(({ data }) => <Post postData={data} key={data.id} />)) ??
+          Array(5)
+            .fill(0)
+            .map((_, i) => <PostSkeleton key={i} />)}
 
         <LoadMoreButton setSize={setSize} isLoading={isLoading || isValidating} />
       </div>
