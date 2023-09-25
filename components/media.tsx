@@ -66,7 +66,7 @@ function getVideoMimeType(url: string) {
 function getProperVideoUrl(post) {
   const url = post.url
   if (isRedditVideo(url)) {
-    return post.media.reddit_video.fallback_url
+    return post.media?.reddit_video.fallback_url
   }
   const newUrl = url.split('.')
   let type = newUrl.pop() || ''
